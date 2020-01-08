@@ -2,8 +2,8 @@ package com.android.forecastapp.data.db.unitlocalized
 
 interface UnitSpecificCurrentWeatherEntry {
     val temperature: Double
-    val conditionText: String
-    val conditionIconUrl: String
+    val conditionText: List<String>
+    val conditionIconUrl: List<String>
     val windSpeed: Double
     val windDirection: String
     val precipitationVolume: Double

@@ -6,9 +6,9 @@ data class MetricCurrentWeatherEntry(
     @ColumnInfo(name = "temperature")
     override val temperature: Double,
     @ColumnInfo(name = "weatherDescriptions")
-    override val conditionText: String,
+    override val conditionText: List<String>,
     @ColumnInfo(name = "weatherIcons")
-    override val conditionIconUrl: String,
+    override val conditionIconUrl: List<String>,
     @ColumnInfo(name = "windSpeed")
     override val windSpeed: Double,
     @ColumnInfo(name = "windDir")
