@@ -1,5 +1,7 @@
-package com.android.forecastapp.data.response
+package com.android.forecastapp.data.network.response
 
+import com.android.forecastapp.data.db.entity.Location
+import com.android.forecastapp.data.db.entity.CurrentWeatherEntry
 import com.google.gson.annotations.SerializedName
 
 

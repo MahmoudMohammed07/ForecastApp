@@ -1,4 +1,4 @@
-package com.android.forecastapp.data.response
+package com.android.forecastapp.data.db.entity
 
 
 import com.google.gson.annotations.SerializedName
