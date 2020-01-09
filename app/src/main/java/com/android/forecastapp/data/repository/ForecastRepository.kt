@@ -4,5 +4,5 @@ import androidx.lifecycle.LiveData
 import com.android.forecastapp.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
 
 interface ForecastRepository {
-    suspend fun getCurrentWeather(metric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry>
+    suspend fun getCurrentWeather(): LiveData<out UnitSpecificCurrentWeatherEntry>
 }
