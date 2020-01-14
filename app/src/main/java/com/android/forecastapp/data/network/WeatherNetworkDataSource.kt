@@ -6,5 +6,5 @@ import com.android.forecastapp.data.network.response.CurrentWeatherResponse
 interface WeatherNetworkDataSource {
     val downloadedCurrentWeather: LiveData<CurrentWeatherResponse>
 
-    suspend fun fetchCurrentWeather(location: String)
+    suspend fun fetchCurrentWeather(location: String, unit: String)
 }

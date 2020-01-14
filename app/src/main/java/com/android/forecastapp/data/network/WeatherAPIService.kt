@@ -17,7 +17,8 @@ interface WeatherAPIService {
 
     @GET("current")
     fun getCurrentWeather(
-        @Query("query") location: String
+        @Query("query") location: String,
+        @Query("units") unit: String
     ): Deferred<CurrentWeatherResponse>
 
     companion object {
@@ -27,7 +28,8 @@ interface WeatherAPIService {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("access_key",
+                    .addQueryParameter(
+                        "access_key",
                         API_KEY
                     )
                     .build()

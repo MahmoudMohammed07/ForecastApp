@@ -54,9 +54,8 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             if (it == null) return@Observer
 
             group_loading.visibility = View.GONE
-            updateLocation("London")
             updateDateToToday()
-            updateTemperature(it.temperature,it.feelsLikeTemperature)
+            updateTemperature(it.temperature, it.feelsLikeTemperature)
             updateCondition(it.conditionText)
             updatePrecipitation(it.precipitationVolume)
             updateWind(it.windDirection, it.windSpeed)
@@ -66,6 +65,16 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
                 .load(it.conditionIconUrl[0])
                 .into(imageView_condition_icon)
         })
+
+        val weatherLocation = viewModel.weatherLocation.await()
+        weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
+            if (location == null) return@Observer
+            updateLocation(location.name)
+        })
+    }
+
+    private fun chooseLocalizedUnitAbbreviation(metric: String, imperial: String): String {
+        return if (viewModel.isMetric) metric else imperial
     }
 
     private fun updateLocation(location: String) {
@@ -76,9 +85,10 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Today"
     }
 
-    private fun updateTemperature(temperature: Double, feelsLike: Double){
-        textView_temperature.text = "$temperature°C"
-        textView_feels_like_temperature.text = "Feels like $feelsLike°C"
+    private fun updateTemperature(temperature: Double, feelsLike: Double) {
+        val unitAbbreviation = chooseLocalizedUnitAbbreviation("°C", "°F")
+        textView_temperature.text = "$temperature$unitAbbreviation"
+        textView_feels_like_temperature.text = "Feels like $feelsLike$unitAbbreviation"
     }
 
     private fun updateCondition(condition: List<String>) {
@@ -86,15 +96,18 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun updatePrecipitation(precipitationVolume: Double) {
-        textView_precipitation.text = "Preciptiation: $precipitationVolume mm"
+        val unitAbbreviation = chooseLocalizedUnitAbbreviation("mm", "in")
+        textView_precipitation.text = "Precipitation: $precipitationVolume $unitAbbreviation"
     }
 
     private fun updateWind(windDirection: String, windSpeed: Double) {
-        textView_wind.text = "Wind: $windDirection, $windSpeed kph"
+        val unitAbbreviation = chooseLocalizedUnitAbbreviation("kph", "mph")
+        textView_wind.text = "Wind: $windDirection, $windSpeed $unitAbbreviation"
     }
 
     private fun updateVisibility(visibilityDistance: Double) {
-        textView_visibility.text = "Visibility: $visibilityDistance km"
+        val unitAbbreviation = chooseLocalizedUnitAbbreviation("km", "mi.")
+        textView_visibility.text = "Visibility: $visibilityDistance $unitAbbreviation"
     }
 
 }
